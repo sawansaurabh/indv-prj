@@ -51,5 +51,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "indv_prj.sln"
+    "dotnet.defaultSolution": "indv_prj.sln",
+    "files.associations": {
+        "functional": "cpp"
+    }
 }

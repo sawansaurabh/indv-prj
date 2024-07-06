@@ -28,7 +28,7 @@ public class ShipController : MonoBehaviour
         lookInput.x = Input.mousePosition.x;
         lookInput.y = Input.mousePosition.y;
 
-        mouseDistance.x = (lookInput.x - screenCenter.x) / screenCenter.x;
+        mouseDistance.x = (lookInput.x - screenCenter.x) / screenCenter.y;
         mouseDistance.y = (lookInput.y - screenCenter.y) / screenCenter.y;
 
         mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);

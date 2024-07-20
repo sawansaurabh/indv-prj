@@ -10059,11 +10059,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570984, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.23
+      value: 0.215
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570984, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.23
+      value: 0.215
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570984, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10095,19 +10095,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570985, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: _frequency
-      value: 45
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570985, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: _topicName
-      value: /camera/depth/image/camera_info
+      value: /camera/depth/camera_info
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853532333615570985, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
+      propertyPath: _serializer._header._frame_id
+      value: camera_frame
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570986, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: _frequency
-      value: 45
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853532333615570986, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
+      propertyPath: _topicName
+      value: /camera/depth/image_raw/compressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853532333615570986, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
+      propertyPath: _serializer._header._frame_id
+      value: camera_frame
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615570987, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: _frequency
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4853532333615570987, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
+      propertyPath: _serializer._header._frame_id
+      value: camera_frame
       objectReference: {fileID: 0}
     - target: {fileID: 4853532333615571027, guid: d012f0b7c76483442b919bbd059cd922, type: 3}
       propertyPath: m_Name
@@ -10717,7 +10733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3526848927119471297, guid: f0f8681e124442040b39314ccacec637, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.215
       objectReference: {fileID: 0}
     - target: {fileID: 3526848927119471297, guid: f0f8681e124442040b39314ccacec637, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10879,6 +10895,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2614241744216947712, guid: 5bd685975a63f0542b3ac964a6f0f778, type: 3}
       insertIndex: -1
       addedObject: {fileID: 746663934}
+    - targetCorrespondingSourceObject: {fileID: 2614241744216947712, guid: 5bd685975a63f0542b3ac964a6f0f778, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 746663939}
   m_SourcePrefab: {fileID: 100100000, guid: 5bd685975a63f0542b3ac964a6f0f778, type: 3}
 --- !u!4 &746663924 stripped
 Transform:
@@ -10900,7 +10919,7 @@ MonoBehaviour:
   forwardSpeed: 20
   strafeSpeed: 7.5
   hoverSpeed: 5
-  lookRateSpeed: 90
+  lookRateSpeed: 1
   rollSpeed: 90
   rollAcceleration: 3.5
 --- !u!114 &746663929
@@ -11014,6 +11033,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrusterParticles: {fileID: 1339832463}
   thrusterKey: 113
+--- !u!114 &746663939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211950594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56cd293d3cc390afc98ce025f65013c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topicName: unity_odom
+  publishMessageFrequency: 0.1
 --- !u!1001 &797451264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21320,19 +21353,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200578, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: _frequency
-      value: 45
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2016422477619200578, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
+      propertyPath: _topicName
+      value: /camera/rgb/image_raw/compressed
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200578, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: _serializer.quality
       value: 75
       objectReference: {fileID: 0}
+    - target: {fileID: 2016422477619200578, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
+      propertyPath: _serializer._header._frame_id
+      value: camera_frame
+      objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200579, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: _frequency
-      value: 45
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200579, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: _topicName
-      value: /camera/color/image/camera_info
+      value: /camera/rgb/camera_info
+      objectReference: {fileID: 0}
+    - target: {fileID: 2016422477619200579, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
+      propertyPath: _serializer._header._frame_id
+      value: camera_frame
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200581, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21340,11 +21385,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200581, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.23
+      value: 0.215
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200581, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.23
+      value: 0.215
       objectReference: {fileID: 0}
     - target: {fileID: 2016422477619200581, guid: ae5d0d7848c9e3c46a8ba3ca8b9f3413, type: 3}
       propertyPath: m_LocalRotation.w

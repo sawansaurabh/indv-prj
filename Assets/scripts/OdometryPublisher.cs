@@ -14,6 +14,9 @@ public class OdometryPublisher : MonoBehaviour
     private float timeElapsed;
     private OdometryMsg odomMessage;
 
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
     void Start()
     {
         ros = ROSConnection.GetOrCreateInstance();
@@ -37,6 +40,10 @@ public class OdometryPublisher : MonoBehaviour
         odomMessage.twist.twist.linear = new Vector3Msg();
         odomMessage.twist.twist.angular = new Vector3Msg();
 
+        // Set initial position and rotation
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+
         timeElapsed = 0;
     }
 
@@ -53,24 +60,24 @@ public class OdometryPublisher : MonoBehaviour
             };
 
             odomMessage.header.frame_id = "odom";
-            // odomMessage.child_frame_id = "base_link";
+            odomMessage.child_frame_id = "base_link";
 
-            Vector3<FLU> position = transform.position.To<FLU>();
+            Vector3<FLU> relativePosition = (transform.position - initialPosition).To<FLU>();
             odomMessage.pose.pose.position = new PointMsg
             {
-                x = position.x,
-                y = position.y,
-                z = position.z
+                x = relativePosition.x,
+                y = relativePosition.y,
+                z = relativePosition.z
             };
 
-            // Set orientation using FLU transformation
-            Quaternion<FLU> orientation = transform.rotation.To<FLU>();
+            // Calculate relative orientation
+            Quaternion<FLU> relativeOrientation = (Quaternion.Inverse(initialRotation) * transform.rotation).To<FLU>();
             odomMessage.pose.pose.orientation = new QuaternionMsg
             {
-                x = orientation.x,
-                y = orientation.y,
-                z = orientation.z,
-                w = orientation.w
+                x = relativeOrientation.x,
+                y = relativeOrientation.y,
+                z = relativeOrientation.z,
+                w = relativeOrientation.w
             };
 
             // Set linear velocity using FLU transformation

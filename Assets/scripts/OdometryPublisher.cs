@@ -16,6 +16,10 @@ public class OdometryPublisher : MonoBehaviour
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
+    private Rigidbody rb;
+    private float velocityElapsed;
+    private Vector3 previousPosition;
+    private Vector3 velocity;
 
     void Start()
     {
@@ -24,35 +28,42 @@ public class OdometryPublisher : MonoBehaviour
 
         odomMessage = new OdometryMsg();
 
-        // Initialize header
         odomMessage.header = new HeaderMsg();
         odomMessage.header.stamp = new TimeMsg();
 
-        // Initialize pose
         odomMessage.pose = new PoseWithCovarianceMsg();
         odomMessage.pose.pose = new PoseMsg();
         odomMessage.pose.pose.position = new PointMsg();
         odomMessage.pose.pose.orientation = new QuaternionMsg();
 
-        // Initialize twist
         odomMessage.twist = new TwistWithCovarianceMsg();
         odomMessage.twist.twist = new TwistMsg();
         odomMessage.twist.twist.linear = new Vector3Msg();
         odomMessage.twist.twist.angular = new Vector3Msg();
 
-        // Set initial position and rotation
         initialPosition = transform.position;
         initialRotation = transform.rotation;
+
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody component missing from the GameObject.");
+        }
 
         timeElapsed = 0;
     }
 
-    void Update()
+    void Update() 
     {
         timeElapsed += Time.deltaTime;
 
-        if (timeElapsed >= publishMessageFrequency)
+        if (timeElapsed >= publishMessageFrequency && rb != null)
         {
+            Vector3 velocity = rb.velocity;
+            Vector3 angularVelocity = rb.angularVelocity;
+
+            // Debug.Log($"Velocity: {velocity}");
+            // Debug.Log($"Angular Velocity: {angularVelocity}");
             odomMessage.header.stamp = new TimeMsg
             {
                 sec = (int)(uint)Time.time,
@@ -79,24 +90,27 @@ public class OdometryPublisher : MonoBehaviour
                 z = relativeOrientation.z,
                 w = relativeOrientation.w
             };
+        
+            Vector3 currentPosition = transform.position;
+            Vector3 displacement = currentPosition - previousPosition;
+            velocity = displacement / publishMessageFrequency;
 
-            // Set linear velocity using FLU transformation
-            Vector3<FLU> velocity = GetComponent<Rigidbody>().velocity.To<FLU>();
+            Vector3<FLU> f_velocity = velocity.To<FLU>();
             odomMessage.twist.twist.linear = new Vector3Msg 
             {
-                x = velocity.x,
-                y = velocity.y,
-                z = velocity.z
+                x = f_velocity.x,
+                y = f_velocity.y,
+                z = f_velocity.z
             };
-
-            // Set angular velocity using FLU transformation
-            Vector3<FLU> angularVelocity = GetComponent<Rigidbody>().angularVelocity.To<FLU>();
-            odomMessage.twist.twist.angular = new Vector3Msg
-            {
-                x = angularVelocity.x,
-                y = angularVelocity.y,
-                z = angularVelocity.z
-            };
+            previousPosition = currentPosition;
+            
+            // Vector3<FLU> angularVelocity = rb.angularVelocity.To<FLU>();
+            // odomMessage.twist.twist.angular = new Vector3Msg
+            // {
+            //     x = angularVelocity.x,
+            //     y = angularVelocity.y,
+            //     z = angularVelocity.z
+            // };
 
             ros.Publish(topicName, odomMessage);
 

@@ -32,12 +32,13 @@ public class ForceComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 forceVector = new Vector3(force, 0.0f, 0.0f);
+        Vector3 localForceVector = new Vector3(force, 0.0f, 0.0f);
 
         if(Input.GetKey(accel))
         {
+            Vector3 globalForceVector = transform.TransformDirection(localForceVector);
             emissionModule.enabled = true;
-            rb.AddForce(forceVector, ForceMode.Force);
+            rb.AddForce(globalForceVector, ForceMode.Force);
         }
         else
         {
